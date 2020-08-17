@@ -1,2 +1,2 @@
-# text-reveal
+# Text Reveal
 Reveal the Secret text.
