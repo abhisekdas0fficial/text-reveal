@@ -20,7 +20,9 @@ body {
   font-family: Montserrat;
   font-size: 32px;
   text-align: left;
-  color: #20123a;
+  color: #020e2d;
+  -webkit-transition: height 0.5s ease-in-out;
+  transition: height 0.5s ease-in-out;
 }
 
 .wrapper .cover-1 {
@@ -29,8 +31,9 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #20123a;
+  background-color: #020e2d;
   z-index: 2;
+  opacity: 0.9;
 }
 
 .wrapper .cover-2 {
@@ -50,5 +53,14 @@ body {
 
 #show {
   display: block;
+  visibility: hidden;
+  -webkit-transition: visibility;
+  transition: visibility;
+  -webkit-transition-delay: 0.6s;
+          transition-delay: 0.6s;
+}
+
+#show.first {
+  visibility: visible;
 }
 /*# sourceMappingURL=main.css.map */

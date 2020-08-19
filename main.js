@@ -1,19 +1,32 @@
-position = 1;
+var position = 1;
+var wrapper = document.querySelector(".wrapper");
 
 function handler() {
-    var elements = document.querySelectorAll(".wrapper li");
+    var lists = document.querySelectorAll(".wrapper li");
+    prevHeight = getComputedStyle(wrapper).height;
 
-    if (position < elements.length) {
-        position += 1;
-    } else {
-        position = 1
-    }
+    position = (position < lists.length) ? position+1 : 1;
 
-    elements.forEach(element => {
+    lists.forEach(element => {
         element.removeAttribute("id");
+        element.style.visibility = "hidden";
     });
 
-    document.querySelector(`.wrapper li:nth-child(${position})`).id = "show";
+    var show = document.querySelector(`.wrapper li:nth-child(${position})`);
+    show.id = "show";
+    endHeight = getComputedStyle(wrapper).height;
+
+    if (prevHeight != endHeight) {
+        wrapper.style.height = prevHeight;
+        wrapper.offsetWidth;
+        wrapper.style.height = endHeight;
+    }
+
+    wrapper.addEventListener('transitionend', function (e) {
+        wrapper.removeEventListener('transitionend', arguments.callee);
+        wrapper.style.height = null;
+    });
+    show.style.visibility = "visible";
 }
 
 
@@ -21,7 +34,7 @@ gsap.from(".wrapper", {
     duration: 0.6,
     y: -20,
     opacity: 0
-})
+});
 
 var tl = gsap.timeline({
     repeat: -1,
@@ -30,13 +43,12 @@ var tl = gsap.timeline({
     repeatDelay: 0.5
 });
 
-tl
-  .to(".cover", {
-      duration: 1,
-      width: "100%",
-      stagger: {
-          amount: 0.2,
-          from: 1
-      },
-      onComplete: handler
-  }, "+=2")
+tl.to(".cover", {
+    duration: 1,
+    width: "100%",
+    stagger: {
+        amount: 0.2,
+        from: 1
+    },
+    onComplete: handler
+}, "+=2");
